@@ -4,7 +4,7 @@ pipeline {
     stage('检出 blue') {
       steps {
         checkout([$class: 'GitSCM', branches: [[name: env.GIT_BUILD_REF]],
-                                          userRemoteConfigs: [[url: env.GIT_REPO_URL, credentialsId: env.CREDENTIALS_ID]]])
+                                                  userRemoteConfigs: [[url: env.GIT_REPO_URL, credentialsId: env.CREDENTIALS_ID]]])
       }
     }
     stage('构建') {
@@ -20,8 +20,6 @@ pipeline {
         }
 
         archiveArtifacts(artifacts: 'README.md', fingerprint: true)
-        mergeMR(depot: '${env.PROJECT_NAME}', token: '${env.PROJECT_TOKEN}', mrResourceId: '${env.MR_RESOURCE_ID}', commitMessage: '123')
-        commentMR(depot: '${env.PROJECT_NAME}', token: '${env.PROJECT_TOKEN}', mrResourceId: '${env.MR_RESOURCE_ID}', commentContent: '33')
       }
     }
     stage('测试') {
